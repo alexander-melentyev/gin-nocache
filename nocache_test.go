@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alexander-melentyev/gin-nocache"
+	nocache "github.com/alexander-melentyev/gin-nocache"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
 )
@@ -31,11 +31,16 @@ func TestNoCache(t *testing.T) {
 			"test": "test",
 		})
 	})
+	r.Header.Set("ETag", "test")
 	g.ServeHTTP(w, r)
 
 	for k, v := range noCacheHeaders {
 		t.Run(k, func(t *testing.T) {
 			require.Equal(t, w.Header().Get(k), v)
+		})
+
+		t.Run(k, func(t *testing.T) {
+			require.Equal(t, r.Header.Get("ETag"), "")
 		})
 	}
 }
