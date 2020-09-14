@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	// Unix epoch time
+	// Unix epoch time.
 	epoch = time.Unix(0, 0).Format(time.RFC1123)
 
 	// Taken from https://github.com/mytrile/nocache
