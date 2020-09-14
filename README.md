@@ -6,6 +6,11 @@
 
 NoCache is a simple piece of middleware that sets a number of HTTP headers to prevent a router (or subrouter) from being cached by an upstream proxy and/or client.
 
+## Installation
+```bash
+go get github.com/alexander-melentyev/gin-nocache
+```
+
 ## Usage
 ```go
 package main
