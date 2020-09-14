@@ -21,18 +21,21 @@ var (
 	}
 )
 
+// test - most duplicated text in test.
+const test = "test"
+
 func TestNoCache(t *testing.T) {
 	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/test", nil)
-	r.Header.Set("ETag", "test")
+	r, _ := http.NewRequest("GET", test, nil)
+	r.Header.Set("ETag", test)
 
 	gin.SetMode(gin.ReleaseMode)
 
 	g := gin.New()
 	g.Use(nocache.NoCache())
-	g.GET("/test", func(c *gin.Context) {
+	g.GET(test, func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"test": "test",
+			test: test,
 		})
 	})
 
