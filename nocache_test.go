@@ -11,13 +11,19 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNoCache(t *testing.T) {
-	// most duplicated text in test.
-	const (
-		test = "test"
-		etag = "ETag"
-	)
+// most duplicated text in test.
+const (
+	test = "test"
+	etag = "ETag"
+)
 
+// noCacheHeaders - struct for test.
+type noCacheHeaders struct {
+	header string
+	value  string
+}
+
+func TestNoCache(t *testing.T) {
 	w := httptest.NewRecorder()
 
 	r, err := http.NewRequest("GET", test, nil)
@@ -38,11 +44,6 @@ func TestNoCache(t *testing.T) {
 	})
 
 	g.ServeHTTP(w, r)
-
-	type noCacheHeaders struct {
-		header string
-		value  string
-	}
 
 	for _, tst := range [...]noCacheHeaders{
 		{
