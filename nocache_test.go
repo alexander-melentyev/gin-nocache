@@ -21,13 +21,16 @@ var (
 	}
 )
 
-// test - most duplicated text in test.
-const test = "test"
+// most duplicated text in test.
+const (
+	test = "test"
+	etag = "ETag"
+)
 
 func TestNoCache(t *testing.T) {
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", test, nil)
-	r.Header.Set("ETag", test)
+	r.Header.Set(etag, test)
 
 	gin.SetMode(gin.ReleaseMode)
 
@@ -47,7 +50,7 @@ func TestNoCache(t *testing.T) {
 		})
 
 		t.Run(k, func(t *testing.T) {
-			require.Equal(t, r.Header.Get("ETag"), "")
+			require.Equal(t, r.Header.Get(etag), "")
 		})
 	}
 }
