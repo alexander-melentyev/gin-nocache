@@ -11,21 +11,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// most duplicated text in test.
-const (
-	test = "test"
-	etag = "ETag"
-)
-
 func TestNoCache(t *testing.T) {
-	var (
-		epoch          = time.Unix(0, 0).Format(time.RFC1123)
-		noCacheHeaders = map[string]string{
-			"Expires":         epoch,
-			"Cache-Control":   "no-cache, no-store, no-transform, must-revalidate, private, max-age=0",
-			"Pragma":          "no-cache",
-			"X-Accel-Expires": "0",
-		}
+	// most duplicated text in test.
+	const (
+		test = "test"
+		etag = "ETag"
 	)
 
 	w := httptest.NewRecorder()
@@ -44,12 +34,36 @@ func TestNoCache(t *testing.T) {
 
 	g.ServeHTTP(w, r)
 
-	for k, v := range noCacheHeaders {
-		t.Run(k, func(t *testing.T) {
-			require.Equal(t, w.Header().Get(k), v)
+	type noCacheHeaders struct {
+		header string
+		value  string
+	}
+
+	for _, tst := range [...]noCacheHeaders{
+		{
+			header: "Expires",
+			value:  time.Unix(0, 0).Format(time.RFC1123),
+		},
+		{
+			header: "Cache-Control",
+			value:  "no-cache, no-store, no-transform, must-revalidate, private, max-age=0",
+		},
+		{
+			header: "Pragma",
+			value:  "no-cache",
+		},
+		{
+			header: "X-Accel-Expires",
+			value:  "0",
+		},
+	} {
+		tst := tst
+
+		t.Run(tst.header, func(t *testing.T) {
+			require.Equal(t, w.Header().Get(tst.header), tst.value)
 		})
 
-		t.Run(k, func(t *testing.T) {
+		t.Run(tst.header, func(t *testing.T) {
 			require.Equal(t, r.Header.Get(etag), "")
 		})
 	}
