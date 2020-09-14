@@ -19,7 +19,12 @@ func TestNoCache(t *testing.T) {
 	)
 
 	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", test, nil)
+
+	r, err := http.NewRequest("GET", test, nil)
+	if err != nil {
+		t.Fatal("request error:", err)
+	}
+
 	r.Header.Set(etag, test)
 
 	gin.SetMode(gin.ReleaseMode)
