@@ -11,16 +11,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var (
-	epoch          = time.Unix(0, 0).Format(time.RFC1123)
-	noCacheHeaders = map[string]string{
-		"Expires":         epoch,
-		"Cache-Control":   "no-cache, no-store, no-transform, must-revalidate, private, max-age=0",
-		"Pragma":          "no-cache",
-		"X-Accel-Expires": "0",
-	}
-)
-
 // most duplicated text in test.
 const (
 	test = "test"
@@ -28,6 +18,16 @@ const (
 )
 
 func TestNoCache(t *testing.T) {
+	var (
+		epoch          = time.Unix(0, 0).Format(time.RFC1123)
+		noCacheHeaders = map[string]string{
+			"Expires":         epoch,
+			"Cache-Control":   "no-cache, no-store, no-transform, must-revalidate, private, max-age=0",
+			"Pragma":          "no-cache",
+			"X-Accel-Expires": "0",
+		}
+	)
+
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", test, nil)
 	r.Header.Set(etag, test)
