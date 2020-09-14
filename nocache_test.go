@@ -24,6 +24,9 @@ var (
 func TestNoCache(t *testing.T) {
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", "/test", nil)
+
+	gin.SetMode(gin.ReleaseMode)
+
 	g := gin.New()
 	g.Use(nocache.NoCache())
 	g.GET("/test", func(c *gin.Context) {
