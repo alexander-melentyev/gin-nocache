@@ -24,6 +24,7 @@ var (
 func TestNoCache(t *testing.T) {
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", "/test", nil)
+	r.Header.Set("ETag", "test")
 
 	gin.SetMode(gin.ReleaseMode)
 
@@ -34,7 +35,7 @@ func TestNoCache(t *testing.T) {
 			"test": "test",
 		})
 	})
-	r.Header.Set("ETag", "test")
+
 	g.ServeHTTP(w, r)
 
 	for k, v := range noCacheHeaders {
