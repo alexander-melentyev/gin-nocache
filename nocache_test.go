@@ -11,17 +11,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// most duplicated text in test.
 const (
 	test = "test"
 	etag = "ETag"
 )
 
-// noCacheHeaders - struct for test.
 type noCacheHeaders struct {
 	header string
 	value  string
 }
+
+// nolint:gochecknoglobals
+var epoch = time.Unix(0, 0).Format(time.RFC1123)
 
 func TestNoCache(t *testing.T) {
 	w := httptest.NewRecorder()
@@ -48,7 +49,7 @@ func TestNoCache(t *testing.T) {
 	for _, tst := range [...]noCacheHeaders{
 		{
 			header: "Expires",
-			value:  time.Unix(0, 0).Format(time.RFC1123),
+			value:  epoch,
 		},
 		{
 			header: "Cache-Control",
