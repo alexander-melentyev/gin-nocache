@@ -20,6 +20,7 @@ var (
 		"X-Accel-Expires": "0",
 	}
 
+	// ETag headers.
 	// nolint:gochecknoglobals
 	etagHeaders = []string{
 		"ETag",
