@@ -22,7 +22,7 @@ var (
 
 	// ETag headers.
 	// nolint:gochecknoglobals
-	etagHeaders = []string{
+	etagHeaders = [6]string{
 		"ETag",
 		"If-Modified-Since",
 		"If-Match",
