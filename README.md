@@ -17,7 +17,7 @@ package main
 
 import (
      "github.com/gin-gonic/gin"
-     "github.com/alexander-melentyev/gin-nocache"
+     nocache "github.com/alexander-melentyev/gin-nocache"
  )
 
 func main() {
